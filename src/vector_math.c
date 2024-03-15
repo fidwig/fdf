@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:56:38 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/14 19:23:35 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/15 20:22:04 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,22 @@ t_vec3	mult_vec3_mat3(t_vec3 vec, t_mat3 mat)
 	return (result);
 }
 
-// t_vec3	mult_vec3_mat3(t_vec3 vec, t_mat3 mat)
-// {
-// 	t_vec3	result;
-
-// 	result.x = vec.x * mat.a.x + vec.y * mat.b.x + vec.z * mat.c.x;
-// 	result.y = vec.x * mat.a.y + vec.y * mat.b.y + vec.z * mat.c.y;
-// 	result.z = vec.x * mat.a.z + vec.y * mat.b.z + vec.z * mat.c.z;
-
-// 	return (result);
-// }
-
-t_pt	get_screenspace_pos(t_vars *vars, t_pt pt)
+t_vec3	project_pos(t_vars *vars, t_vec3 pos)
 {
-	t_pt	screenspace_point;
-	t_vec3	vec;
+	pos.z = pos.z * vars->transform.depth_scale;
+	pos = isometric_projection(pos, vars);
+	return (pos);
+}
 
-	vec = pt.pos;
-	vec.z = vec.z * vars->transform.depth_scale;
+t_pt	get_transformed_point(t_vars *vars, int x, int y)
+{
+	t_pt	pt;
 
-	vec = isometric_projection(vec, vars);
+	// pt.pos = project_pos(vars, vars->map.points[y][x].pos);
+	pt.pos = vars->map.points_proj[y][x];
 
-	vec.x = vec.x * vars->transform.scale + vars->transform.offset.x;
-	vec.y = vec.y * vars->transform.scale + vars->transform.offset.y;
-	screenspace_point.pos = vec;
-	screenspace_point.col = pt.col;
-	return (screenspace_point);
+	pt.pos.x = pt.pos.x * vars->transform.scale + vars->transform.offset.x;
+	pt.pos.y = pt.pos.y * vars->transform.scale + vars->transform.offset.y;
+	pt.col = vars->map.points[y][x].col;
+	return (pt);
 }

@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:24:16 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/13 15:13:41 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/15 16:59:00 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	free_map(t_vars *vars)
 	while (i < vars->map.hei)
 	{
 		free(vars->map.points[i]);
+		free(vars->map.points_proj[i]);
 		i++;
 	}
 	free(vars->map.points);
+	free(vars->map.points_proj);
 }
 
 void	free_mlx(t_vars *vars)

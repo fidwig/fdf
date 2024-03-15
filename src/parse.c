@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:23:39 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/14 17:55:50 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/15 20:16:43 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,11 @@ void	init_map_points(t_vars *vars)
 
 	i = 0;
 	vars->map.points = (t_pt **) malloc((vars->map.hei) * sizeof(t_pt *));
+	vars->map.points_proj = (t_vec3 **) malloc((vars->map.hei) * sizeof(t_vec3 *));
 	while (i < vars->map.hei)
 	{
 		vars->map.points[i] = (t_pt *)malloc((vars->map.wid) * sizeof(t_pt));
+		vars->map.points_proj[i] = (t_vec3 *)malloc((vars->map.wid) * sizeof(t_vec3));
 		i++;
 	}
 }

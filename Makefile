@@ -1,6 +1,6 @@
 NAME := fdf
 CC := clang
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -O2 -fno-builtin
 CPPFLAGS := -MMD -MP -I include
 RM := rm -rf
 SRC_DIR := src
@@ -8,7 +8,7 @@ BUILD_DIR := build
 MLX := mlx/libmlx.a
 HEADER := fdf.h get_next_line.h keysymdef.h
 HEADER := $(HEADER:%=$(SRC_DIR)/%)
-SRCS := fdf.c parse.c graphics.c get_next_line.c get_next_line_utils.c ft_split.c ft_atoi.c atoui.c free_and_exit.c str.c vector_math.c matrices.c
+SRCS := fdf.c parse.c inputs.c graphics.c get_next_line.c get_next_line_utils.c ft_split.c ft_atoi.c atoui.c free_and_exit.c str.c vector_math.c matrices.c
 SRCS := $(SRCS:%=$(SRC_DIR)/%)
 OBJS := $(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 DEPS := $(OBJS:%.o=%.d)

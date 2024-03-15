@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:04:50 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/14 19:38:39 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/15 21:36:37 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,12 @@
 # define WIDTH			1280
 # define HEIGHT			720
 
-# define CENTER_X 		WIDTH/2
-# define CENTER_Y 		HEIGHT/2
+# define CENTER_X 		640
+# define CENTER_Y 		460
+# define OFFSET_X		CENTER_X
+# define OFFSET_Y		CENTER_Y
 # define SCALE 			5
-# define DEPTH_SCALE	0.1
+# define DEPTH_SCALE	0.5
 
 typedef struct s_data
 {
@@ -80,6 +82,9 @@ typedef struct s_map
 	int		hei;
 	int		wid;
 	t_pt	**points;
+	t_vec3	**points_proj;
+	float	fur;
+	float	clo;
 }	t_map;
 
 typedef struct s_transform
@@ -88,7 +93,8 @@ typedef struct s_transform
 	float	depth_scale;
 	t_vec3	offset;
 	t_vec3	rotations;
-	t_vec3	prev_rots;
+	int		rotate;
+	int		project;
 	t_mat3	z_rot;
 	t_mat3	y_rot;
 	t_mat3	x_rot;
@@ -101,13 +107,16 @@ typedef struct s_vars
 	t_map		map;
 	t_data		img;
 	t_transform	transform;
+	int			display_mode;
+	int			projection;
 }	t_vars;
 
 
 void				pixel_put(t_data *data, int x, int y, unsigned int color);
 void				draw_line(t_vars *vars, t_pt p0, t_pt p1);
 
-t_pt				get_screenspace_pos(t_vars *vars, t_pt pt);
+t_pt				get_transformed_point(t_vars *vars, int x, int y);
+t_vec3				project_pos(t_vars *vars, t_vec3 pos);
 
 int					count_points(char const *s, char c);
 char				**ft_split(char const *s, char c);
@@ -125,6 +134,14 @@ void				parse_map(t_vars *vars, char *map_str);
 void				free_map(t_vars *vars);
 void				free_mlx(t_vars *vars);
 void				free_and_exit1(t_vars *vars, void *line, void *map_str);
+
+void				update_depth(int change, t_vars *vars);
+void				update_zoom(int change, t_vars *vars);
+void				move_grid(int x, int y, t_vars *vars);
+void				rotate_grid_z(int rotation, t_vars *vars);
+void				rotate_grid_x(int rotation, t_vars *vars);
+int					key_hook(int keycode, t_vars *vars);
+int					close_all(t_vars *vars);
 
 t_vec3				mult_vec3_mat3(t_vec3 vec, t_mat3 mat);
 t_vec3				isometric_projection(t_vec3 vec, t_vars *vars);
