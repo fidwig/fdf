@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:04:50 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/16 03:44:14 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/16 19:11:06 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define HEIGHT			720
 
 # define CENTER_X 		640
-# define CENTER_Y 		460
+# define CENTER_Y 		360
 # define OFFSET_X		0
 # define OFFSET_Y		0
 # define SCALE 			5
@@ -64,12 +64,29 @@ typedef struct s_vec3
 	float	z;
 }	t_vec3;
 
+
 typedef struct s_mat3
 {
 	t_vec3	a;
 	t_vec3	b;
 	t_vec3	c;
 }	t_mat3;
+
+typedef struct s_vec4
+{
+	float	x;
+	float	y;
+	float	z;
+	float	w;
+}	t_vec4;
+
+typedef struct s_mat4
+{
+	t_vec4	a;
+	t_vec4	b;
+	t_vec4	c;
+	t_vec4	d;
+}	t_mat4;
 
 typedef struct s_point
 {
@@ -100,11 +117,21 @@ typedef struct s_transform
 	t_mat3	x_rot;
 }	t_transform;
 
+typedef struct s_cam
+{
+	float	near;
+	float	far;
+	float	fov;
+	t_mat4	mat;
+	//maybe pos/rot
+}	t_cam;
+
 typedef struct s_vars
 {
 	void		*mlx;
 	void		*win;
 	t_map		map;
+	t_cam		cam;
 	t_data		img;
 	t_transform	transform;
 	int			display_mode;
@@ -147,5 +174,7 @@ float				dmap(float v, float min, float max);
 
 t_vec3				mult_vec3_mat3(t_vec3 vec, t_mat3 mat);
 t_vec3				isometric_projection(t_vec3 vec, t_vars *vars);
+t_vec3				mult_vec3_mat4(t_vec3 in, t_mat4 m);
+void				set_projection_matrix(t_cam *cam);
 
 #endif

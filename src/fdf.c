@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:03:55 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/16 03:46:54 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/16 19:04:09 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,16 @@ void	refresh_image(t_vars *vars)
 
 void	init_transform(t_vars *vars)
 {
-	vars->transform.scale = HEIGHT / vars->map.hei;
+	vars->transform.scale = (HEIGHT / vars->map.hei) * 0.8;
 	vars->transform.depth_scale = DEPTH_SCALE;
 	vars->transform.offset = (t_vec3){OFFSET_X, OFFSET_Y, 0};
 	vars->transform.rotations = (t_vec3){50, 0, 45};
 	vars->transform.rotate = 1;
 	vars->transform.project = 1;
+	vars->cam.fov = 2;
+	vars->cam.far = -vars->cam.fov * (vars->map.hei > vars->map.wid ? vars->map.hei : vars->map.wid);
+	vars->cam.near = vars->cam.fov * (vars->map.hei > vars->map.wid ? vars->map.hei : vars->map.wid);
+	// set_projection_matrix(&vars->cam);
 }
 
 int	update(t_vars *vars)
@@ -127,12 +131,12 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (1);
+	vars = (t_vars){0};
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, WIDTH, HEIGHT, "FUCK YOU");
 	vars.img.img = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
 	vars.img.addr = mlx_get_data_addr(vars.img.img, &vars.img.bit_depth,
 			&vars.img.line_length, &vars.img.endian);
-	vars.map = (t_map){0};
 	if (!vars.mlx || !vars.win)
 		return (1);
 	fd = open(argv[1], O_RDONLY);

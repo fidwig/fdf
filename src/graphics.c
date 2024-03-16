@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:12:45 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/16 03:04:03 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/16 19:16:31 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ void	draw_line(t_vars *vars, t_pt p0, t_pt p1)
 
 	d[0] = p1.pos.x - p0.pos.x;
 	d[1] = p1.pos.y - p0.pos.y;
+	if (d[0] > WIDTH || d[1] > HEIGHT)
+		return ;
 	if (fabs(d[0]) >= fabs(d[1]))
 		soft_slope(vars, d[0], d[1], p0, p1);
 	else if (fabs(d[1]) > fabs(d[0]))

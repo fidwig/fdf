@@ -1,6 +1,6 @@
 NAME := fdf
 CC := clang
-CFLAGS := -Wall -Wextra -Werror -O2 -fno-builtin
+CFLAGS := -Wall -Wextra -Werror -O2 -fno-builtin -g3
 CPPFLAGS := -MMD -MP -I include
 RM := rm -rf
 SRC_DIR := src
