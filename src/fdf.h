@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:04:50 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/15 21:36:37 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/16 02:34:26 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,8 @@ void				rotate_grid_z(int rotation, t_vars *vars);
 void				rotate_grid_x(int rotation, t_vars *vars);
 int					key_hook(int keycode, t_vars *vars);
 int					close_all(t_vars *vars);
+
+float				dmap(float v, float min, float max);
 
 t_vec3				mult_vec3_mat3(t_vec3 vec, t_mat3 mat);
 t_vec3				isometric_projection(t_vec3 vec, t_vars *vars);

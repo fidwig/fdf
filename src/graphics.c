@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   graphics.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:12:45 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/15 21:48:45 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/16 03:04:03 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ unsigned int	dep(t_vars *vars, unsigned int color, float depth)
 	trgb.t = (unsigned char) 255 * depth;
 	if (vars->display_mode == 1)
 	{
-		trgb.r = 255 * depth;
-		trgb.g = 255 * depth;
-		trgb.b = 255 * depth;
+		trgb.r = 254 * depth + 1;
+		trgb.g = 254 * depth + 1;
+		trgb.b = 254 * depth + 1;
 	}
 	else if (vars->display_mode == 2)
 	{
-		trgb.r *= depth;
-		trgb.g *= depth;
-		trgb.b *= depth;
+		trgb.r = (trgb.r - 1) * depth + 1;
+		trgb.g = (trgb.g - 1) * depth + 1;
+		trgb.b = (trgb.b - 1) * depth + 1;
 	}
 	return (*((unsigned int *) &trgb));
 }
