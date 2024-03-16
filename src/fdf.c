@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
+/*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:03:55 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/15 21:02:49 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/16 03:46:54 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	refresh_image(t_vars *vars)
 
 void	init_transform(t_vars *vars)
 {
-	vars->transform.scale = SCALE;
+	vars->transform.scale = HEIGHT / vars->map.hei;
 	vars->transform.depth_scale = DEPTH_SCALE;
 	vars->transform.offset = (t_vec3){OFFSET_X, OFFSET_Y, 0};
 	vars->transform.rotations = (t_vec3){50, 0, 45};

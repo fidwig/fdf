@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:04:50 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/16 02:34:26 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/16 03:44:14 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 
 # define CENTER_X 		640
 # define CENTER_Y 		460
-# define OFFSET_X		CENTER_X
-# define OFFSET_Y		CENTER_Y
+# define OFFSET_X		0
+# define OFFSET_Y		0
 # define SCALE 			5
 # define DEPTH_SCALE	0.5
 
