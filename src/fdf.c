@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:03:55 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/16 19:04:09 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/17 17:28:30 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ void	init_transform(t_vars *vars)
 	vars->transform.rotate = 1;
 	vars->transform.project = 1;
 	vars->cam.fov = 2;
-	vars->cam.far = -vars->cam.fov * (vars->map.hei > vars->map.wid ? vars->map.hei : vars->map.wid);
-	vars->cam.near = vars->cam.fov * (vars->map.hei > vars->map.wid ? vars->map.hei : vars->map.wid);
+	vars->cam.far = -vars->cam.fov * (vars->map.hei + vars->map.wid);
+	vars->cam.near = 0;
 	// set_projection_matrix(&vars->cam);
 }
 

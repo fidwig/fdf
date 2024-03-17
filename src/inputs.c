@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:42:07 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/16 18:46:50 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/17 17:34:18 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	change_far_near_range(int value, t_vars *vars)
 {
 	vars->transform.project = 1;
 	vars->cam.fov += value * 0.1;
-	vars->cam.far = -vars->cam.fov * (vars->map.hei > vars->map.wid ? vars->map.hei : vars->map.wid);
-	vars->cam.near = vars->cam.fov * (vars->map.hei >  	vars->map.wid ? vars->map.hei : vars->map.wid);
+	vars->cam.far = -vars->cam.fov * (vars->map.hei + vars->map.wid);
+	vars->cam.near = 0;
 }
 
 int	close_all(t_vars *vars)

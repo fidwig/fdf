@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:56:38 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/16 19:28:00 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/17 17:31:27 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ t_vec3	project_pos(t_vars *vars, t_vec3 pos)
 	// float dz = -cam->far * cam->near / (cam->far - cam->near);
 	if (vars->projection == 1)
 	{
-		r = dmap(pos.z, vars->cam.far, 0);//vars->cam.near);
-		pos.y *= r;
+		r = dmap(pos.z, vars->cam.far, vars->cam.near);
 		pos.x *= r;
+		pos.y *= r;
 	}
 
 	return (pos);
