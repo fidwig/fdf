@@ -6,77 +6,60 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:12:45 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/16 19:16:31 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/26 14:59:38 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	pixel_put(t_data *data, int x, int y, unsigned int color)
+void	draw_projected_points(t_vars *vars)
 {
-	char	*dst;
-	t_color	col;
-	t_color	p_col;
+	int					y;
+	int					x;
+	t_pt				pt;
+	t_pt				apt;
 
-	if (x >= WIDTH || y >= HEIGHT || x < 0 || y < 0)
-		return ;
-	dst = data->addr + (y * data->line_length + x * (data->bit_depth / 8));
-	col = *((t_color *) &color);
-	p_col = *((t_color *) dst);
-	if (col.t > p_col.t || (*(unsigned int *)dst) == BLACK || color == BLACK)
-		*(unsigned int *)dst = color;
-}
-
-unsigned int	blend_colors(unsigned int c0, unsigned int c1, float ratio)
-{
-	t_color	col0;
-	t_color	col1;
-
-	col0 = *((t_color *) &c0);
-	col1 = *((t_color *) &c1);
-	col0.r = ((float)col1.r * ratio) + ((float)col0.r * (1 - ratio));
-	col0.g = ((float)col1.g * ratio) + ((float)col0.g * (1 - ratio));
-	col0.b = ((float)col1.b * ratio) + ((float)col0.b * (1 - ratio));
-	return (*((unsigned int *) &col0));
-}
-
-int	sign(int n)
-{
-	return (((n >= 0) * 2 - 1) * (n != 0));
-}
-
-float	dmap(float v, float min, float max)
-{
-	if (max == min)
-		return (0);
-	v = (v - min) / (max - min);
-	return (v);
-}
-
-//encode depth into color
-//CANT NAME IT BECAUSE OF THE FUCKING NORMINETTE I HATE IT SO MUCH
-unsigned int	dep(t_vars *vars, unsigned int color, float depth)
-{
-	t_color	trgb;
-
-	trgb = *((t_color *) &color);
-	trgb.t = (unsigned char) 255 * depth;
-	if (vars->display_mode == 1)
+	y = -1;
+	while (++y < vars->map.hei)
 	{
-		trgb.r = 254 * depth + 1;
-		trgb.g = 254 * depth + 1;
-		trgb.b = 254 * depth + 1;
+		x = -1;
+		while (++x < vars->map.wid)
+		{
+			pt = get_transformed_point(vars, x, y);
+			if (x < vars->map.wid - 1)
+			{
+				apt = get_transformed_point(vars, x + 1, y);
+				draw_line(vars, pt, apt);
+			}
+			if (y < vars->map.hei - 1)
+			{
+				apt = get_transformed_point(vars, x, y + 1);
+				draw_line(vars, pt, apt);
+			}
+		}
 	}
-	else if (vars->display_mode == 2)
-	{
-		trgb.r = (trgb.r - 1) * depth + 1;
-		trgb.g = (trgb.g - 1) * depth + 1;
-		trgb.b = (trgb.b - 1) * depth + 1;
-	}
-	return (*((unsigned int *) &trgb));
 }
 
-void	soft_slope(t_vars *vars, float dx, float dy, t_pt p0, t_pt p1)
+void	clear_image(t_data *image, unsigned int color)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < WIDTH)
+	{
+		j = 0;
+		while (j < HEIGHT)
+		{
+			pixel_put(image, i, j, color);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	soft_slope(t_vars *vars, t_line_vars v)
 {
 	float			c[2];
 	float			x;
@@ -84,15 +67,17 @@ void	soft_slope(t_vars *vars, float dx, float dy, t_pt p0, t_pt p1)
 	int				i;
 	unsigned int	col;
 
-	x = p0.pos.x;
-	y = p0.pos.y;
-	c[0] = sign(dx);
-	c[1] = dy / fabs(dx);
+	x = v.p0.pos.x;
+	y = v.p0.pos.y;
+	c[0] = sign(v.dx);
+	c[1] = v.dy / fabs(v.dx);
 	i = 0;
-	while (i <= fabs(dx))
+	while (i <= fabs(v.dx))
 	{
-		col = blend_colors(p0.col, p1.col, (float)i / fabs(dx));
-		col = dep(vars, col, dmap(p0.pos.z, vars->map.fur, vars->map.clo));
+		if (out_of_display(x, y, c[0], c[1]))
+			return ;
+		col = blend_colors(v.p0.col, v.p1.col, (float)i / fabs(v.dx));
+		col = dep(vars, col, dmap(v.p0.pos.z, vars->map.fur, vars->map.clo));
 		pixel_put(&vars->img, (int)x, (int)y, col);
 		x += c[0];
 		y += c[1];
@@ -100,7 +85,7 @@ void	soft_slope(t_vars *vars, float dx, float dy, t_pt p0, t_pt p1)
 	}
 }
 
-void	hard_slope(t_vars *vars, float dx, float dy, t_pt p0, t_pt p1)
+void	hard_slope(t_vars *vars, t_line_vars v)
 {
 	float			c[2];
 	float			x;
@@ -108,15 +93,17 @@ void	hard_slope(t_vars *vars, float dx, float dy, t_pt p0, t_pt p1)
 	int				i;
 	unsigned int	col;
 
-	x = p0.pos.x;
-	y = p0.pos.y;
-	c[0] = dx / fabs(dy);
-	c[1] = sign(dy);
+	x = v.p0.pos.x;
+	y = v.p0.pos.y;
+	c[0] = v.dx / fabs(v.dy);
+	c[1] = sign(v.dy);
 	i = 0;
-	while (i <= fabs(dy))
+	while (i <= fabs(v.dy))
 	{
-		col = blend_colors(p0.col, p1.col, (float)i / fabs(dy));
-		col = dep(vars, col, dmap(p0.pos.z, vars->map.fur, vars->map.clo));
+		if (out_of_display(x, y, c[0], c[1]))
+			return ;
+		col = blend_colors(v.p0.col, v.p1.col, (float)i / fabs(v.dy));
+		col = dep(vars, col, dmap(v.p0.pos.z, vars->map.fur, vars->map.clo));
 		pixel_put(&vars->img, (int)x, (int)y, col);
 		x += c[0];
 		y += c[1];
@@ -131,10 +118,8 @@ void	draw_line(t_vars *vars, t_pt p0, t_pt p1)
 
 	d[0] = p1.pos.x - p0.pos.x;
 	d[1] = p1.pos.y - p0.pos.y;
-	if (d[0] > WIDTH || d[1] > HEIGHT)
-		return ;
 	if (fabs(d[0]) >= fabs(d[1]))
-		soft_slope(vars, d[0], d[1], p0, p1);
+		soft_slope(vars, (t_line_vars){p0, p1, d[0], d[1]});
 	else if (fabs(d[1]) > fabs(d[0]))
-		hard_slope(vars, d[0], d[1], p0, p1);
+		hard_slope(vars, (t_line_vars){p0, p1, d[0], d[1]});
 }
