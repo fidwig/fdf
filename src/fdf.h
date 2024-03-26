@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:04:50 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/26 17:00:15 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/26 17:37:26 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ float			dmap(float v, float min, float max);
 int				close_all(t_vars *vars);
 int				count_points(char const *s, char c);
 int				ft_atoi(const char *nptr);
-// int				is_on_display(t_vec3 pos);
 int				out_of_display(float x, float y, float cx, float cy);
 int				key_hook(int keycode, t_vars *vars);
 int				sign(int n);

@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 17:42:07 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/26 14:35:56 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/26 17:35:06 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ int	key_hook(int keycode, t_vars *vars)
 	vars->projection += (keycode == XK_p);
 	if (vars->projection > 1)
 		vars->projection = 0;
+	if (keycode == XK_l)
+		vars->transform.rotations = (t_vec3){50, 0, 45};
 	return (0);
 }

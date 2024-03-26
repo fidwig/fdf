@@ -6,17 +6,11 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:03:55 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/26 15:14:01 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/26 17:37:36 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-// int	is_on_display(t_vec3 pos)
-// {
-// 	return (pos.x < WIDTH && pos.y < HEIGHT
-// 		&& pos.x > 0 && pos.y > 0);
-// }
 
 int	out_of_display(float x, float y, float cx, float cy)
 {
