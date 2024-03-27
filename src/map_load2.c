@@ -6,11 +6,31 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 18:03:50 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/26 16:23:18 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/27 16:39:01 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int	check_file_extension(char *path, char *req)
+{
+	int	i;
+	int	j;
+
+	i = ft_strlen(path) - 1;
+	while (path[i] != '.' && i > 0)
+		i--;
+	j = 0;
+	while (path[i + j] && req[j])
+	{
+		if (path[i + j] != req[j])
+			return (0);
+		j++;
+	}
+	if (path[i + j] != 0 || req[j] != 0)
+		return (0);
+	return (1);
+}
 
 void	init_map_points(t_vars *vars)
 {

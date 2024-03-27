@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:04:50 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/26 17:37:26 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/27 16:29:47 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,5 +203,8 @@ void			rotate_grid_z(int rotation, t_vars *vars);
 void			soft_slope(t_vars *vars, t_line_vars v);
 void			update_depth(int change, t_vars *vars);
 void			update_zoom(int change, t_vars *vars);
+t_color			ui2c(unsigned int cui);
+unsigned int	c2ui(t_color c);
+int				check_file_extension(char *path, char *req);
 
 #endif

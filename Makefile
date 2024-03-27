@@ -1,7 +1,7 @@
 NAME := fdf
 CC := clang
-CFLAGS := -Wall -Wextra -Werror -O2 -fno-builtin -g3
-CPPFLAGS := -MMD -MP -I include
+CFLAGS := -Wall -Wextra -Werror -O2 -fno-builtin
+CPPFLAGS := -MMD -MP #-I include
 RM := rm -rf
 SRC_DIR := src
 BUILD_DIR := build
@@ -22,19 +22,20 @@ $(NAME): $(BUILD_DIR) $(OBJS) $(HEADER) $(MLX)
 	$(CC) $(CFLAGS) $(OBJS) $(MLX) -Imlx -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) -I/usr/include -Imlx -c $< -o $@
-
+	$(CC) $(CFLAGS) $(CPPFLAGS) -Imlx -c $< -o $@
+#  -I/usr/include
 $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
 
--include $(DEPS)
+# -include $(DEPS)
 
 clean:
-	$(RM) $(wildcard $(OBJS) $(DEPS) $(BUILD_DIR))
+	$(RM) $(BUILD_DIR)
 	make clean -C mlx
+#	$(RM) $(wildcard $(OBJS) $(DEPS) $(BUILD_DIR))
 
 fclean: clean
-	$(RM) $(wildcard $(NAME) $(BUILD_DIR))
+	$(RM) $(NAME)
 
 re: fclean all
 

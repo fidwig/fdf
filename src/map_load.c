@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:23:39 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/26 16:59:01 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/27 16:42:39 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*add_row_str(t_vars *vars, char *map_str, char *new_row)
 	size_t	row_len;
 	size_t	map_len;
 	char	*new_map_str;
-
 	map_len = 0;
 	if (map_str)
 		map_len = ft_strlen(map_str);
@@ -27,7 +26,7 @@ char	*add_row_str(t_vars *vars, char *map_str, char *new_row)
 		free_and_exit2(vars, map_str, new_row);
 	ft_memcpy(new_map_str, map_str, map_len);
 	ft_memcpy(new_map_str + map_len, new_row, row_len);
-	new_map_str[map_len + row_len] = 0;
+	new_map_str[map_len + row_len] = '\0';
 	free(map_str);
 	return (new_map_str);
 }
@@ -56,6 +55,11 @@ void	open_map(t_vars *vars, char *path)
 	vars->fd = open(path, O_DIRECTORY);
 	if (vars->fd != -1)
 		close_and_exit(vars);
+	if (!check_file_extension(path, ".fdf"))
+	{
+		write(1, "File extention is not .fdf\n", 27);
+		exit (1);
+	}
 	vars->fd = open(path, O_RDONLY);
 	if (vars->fd == -1)
 		close_and_exit(vars);

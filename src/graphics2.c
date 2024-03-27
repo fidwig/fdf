@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 18:27:38 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/26 14:52:57 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/27 13:47:31 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	pixel_put(t_data *data, int x, int y, unsigned int color)
 	if (x >= WIDTH || y >= HEIGHT || x < 0 || y < 0)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bit_depth / 8));
-	col = *((t_color *) &color);
+	col = ui2c(color);
 	p_col = *((t_color *) dst);
 	if (col.t > p_col.t || (*(unsigned int *)dst) == BLACK || color == BLACK)
 		*(unsigned int *)dst = color;
@@ -32,12 +32,12 @@ unsigned int	blend_colors(unsigned int c0, unsigned int c1, float ratio)
 	t_color	col0;
 	t_color	col1;
 
-	col0 = *((t_color *) &c0);
-	col1 = *((t_color *) &c1);
+	col0 = ui2c(c0);
+	col1 = ui2c(c1);
 	col0.r = ((float)col1.r * ratio) + ((float)col0.r * (1 - ratio));
 	col0.g = ((float)col1.g * ratio) + ((float)col0.g * (1 - ratio));
 	col0.b = ((float)col1.b * ratio) + ((float)col0.b * (1 - ratio));
-	return (*((unsigned int *) &col0));
+	return (c2ui(col0));
 }
 
 int	sign(int n)
@@ -59,7 +59,7 @@ unsigned int	dep(t_vars *vars, unsigned int color, float depth)
 {
 	t_color	trgb;
 
-	trgb = *((t_color *) &color);
+	trgb = ui2c(color);
 	trgb.t = (unsigned char) 255 * depth;
 	if (vars->display_mode == 1)
 	{
@@ -73,5 +73,5 @@ unsigned int	dep(t_vars *vars, unsigned int color, float depth)
 		trgb.g = (trgb.g - 1) * depth + 1;
 		trgb.b = (trgb.b - 1) * depth + 1;
 	}
-	return (*((unsigned int *) &trgb));
+	return (c2ui(trgb));
 }

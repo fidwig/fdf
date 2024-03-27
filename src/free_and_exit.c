@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:24:16 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/26 17:12:29 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/27 16:09:43 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ void	close_and_exit(t_vars *vars)
 	free_all(vars);
 	if (vars->fd != -1)
 		close(vars->fd);
-	write(2, "File does not exist or is a directory\n", 38);
+	vars->display_mode = write(2, "I dont like the path you gave me\n", 38);
 	exit (1);
 }

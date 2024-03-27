@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:03:55 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/26 17:37:36 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/27 16:51:43 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ int	main(int argc, char **argv)
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
 	mlx_loop_hook(vars.mlx, update, &vars);
 	mlx_hook(vars.win, 2, 1L << 0, key_hook, &vars);
+	mlx_hook(vars.win, 17, 0L, close_all, &vars);
 	mlx_loop(vars.mlx);
 }
