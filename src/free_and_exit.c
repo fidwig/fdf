@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 17:24:16 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/27 16:09:43 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/28 16:55:04 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	free_and_exit2(t_vars *vars, void *ptr, void *ptr2)
 		close(vars->fd);
 	exit(1);
 }
-	// write(2, "Lines length do not match\n", 26);
 
 void	free_and_exit1(t_vars *vars)
 {
@@ -68,6 +67,5 @@ void	close_and_exit(t_vars *vars)
 	free_all(vars);
 	if (vars->fd != -1)
 		close(vars->fd);
-	vars->display_mode = write(2, "I dont like the path you gave me\n", 38);
 	exit (1);
 }
