@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 19:23:39 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/28 17:31:47 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/03/29 16:38:24 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	open_map(t_vars *vars, char *path)
 	vars->fd = open(path, O_RDONLY);
 	if (vars->fd == -1)
 	{
-		perror("Me no likey the pathey");
+		perror("File not found");
 		close_and_exit(vars);
 	}
 	parse_map(vars, read_map(vars->fd, vars));
@@ -92,7 +92,10 @@ char	*read_map(int fd, t_vars *vars)
 		free(line);
 		line = get_next_line(fd);
 		if (line && count_points(line, ' ') != vars->map.wid)
+		{
+			write(2, "The map is not a rectangle.\n", 27);
 			free_and_exit2(vars, line, map_str);
+		}
 	}
 	return (map_str);
 }
