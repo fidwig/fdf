@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 18:03:50 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/28 17:30:54 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:49:49 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	check_file_extension(char *path, char *req)
 
 	i = ft_strlen(path) - 1;
 	if (i < 4)
+		return (0);
+	if (path[i - 4] == '/')
 		return (0);
 	while (path[i] != '.' && i > 0)
 		i--;
