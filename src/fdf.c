@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:03:55 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/27 16:51:43 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/04/10 17:35:45 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ void	init_values(t_vars *vars)
 	vars->transform.project = 1;
 	vars->cam.fov = 2;
 	vars->cam.far = -vars->cam.fov * (vars->map.hei + vars->map.wid);
-	vars->cam.near = 0;
+	vars->mlx = mlx_init();
+	if (!vars->mlx)
+	{
+		free_map(vars);
+		exit(1);
+	}
 }
 
 int	update(t_vars *vars)
@@ -64,9 +69,6 @@ int	main(int argc, char **argv)
 	vars = (t_vars){0};
 	open_map(&vars, argv[1]);
 	init_values(&vars);
-	vars.mlx = mlx_init();
-	if (!vars.mlx)
-		return (1);
 	vars.win = mlx_new_window(vars.mlx, WIDTH, HEIGHT, argv[1]);
 	if (!vars.win)
 	{
