@@ -6,7 +6,7 @@
 /*   By: jsommet <jsommet@student.42.fr >           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:04:50 by jsommet           #+#    #+#             */
-/*   Updated: 2024/03/27 16:29:47 by jsommet          ###   ########.fr       */
+/*   Updated: 2024/06/10 19:54:13 by jsommet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,13 @@ typedef struct s_mat3
 	t_vec3	c;
 }	t_mat3;
 
-typedef struct s_vec4
+typedef struct s_quat
 {
+	float	w;
 	float	x;
 	float	y;
 	float	z;
-	float	w;
-}	t_vec4;
-
-typedef struct s_mat4
-{
-	t_vec4	a;
-	t_vec4	b;
-	t_vec4	c;
-	t_vec4	d;
-}	t_mat4;
+}	t_quat;
 
 typedef struct s_point
 {
@@ -120,7 +112,7 @@ typedef struct s_cam
 	float	near;
 	float	far;
 	float	fov;
-	t_mat4	mat;
+	// t_mat4	mat;
 }	t_cam;
 
 typedef struct s_malloc_list
